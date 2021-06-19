@@ -1,0 +1,67 @@
+.flex-container {
+  display: flex;
+  box-sizing: border-box;
+}
+body {
+  background-color: #eedfae;
+  animation: background-animation 3s ease-out infinite alternate;
+  font-family: 'Poppins', sans-serif;
+
+}
+@keyframes background-animation {
+  0% {
+    background-color: #eedfae;
+  }
+  33% {
+    background-color: #a5e994;
+  }
+  66% {
+    background-color: #94bbe9;
+  }
+  100%{
+    background-color: #eeaee5;
+  }
+}
+.title {
+  font-family: 'Press Start 2P', cursive;
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+  text-transform: uppercase;
+}
+.title span {
+  font-size: 0.5em;
+}
+main {
+  justify-content: center;
+  align-items: center;
+}
+.trivia {
+  background-color: white;
+  flex-direction: column;
+  width: 50%;
+  max-width: 1400px;
+  padding: 2rem 4rem;
+  border-radius: 2rem;
+}
+.form-item {
+  flex-direction: column;
+  margin: 1rem 0;
+  font-weight: 700;
+}
+.options {
+  font-weight: 400;
+  flex-direction: column;
+}
+.star-button {
+  border-radius: 2rem;
+  border: none;
+  background-color: black;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  padding: 1rem;
+  margin-top: 5vh;
+  font-size: 1.5rem;
+
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia</title>
+    <!--Google fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!--Styles-->
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/form-style.css">
+</head>
+<body>
+  <!--Title-->
+  <div class="title flex-container">
+    <h1>
+      How much do you know? <span>Trivia</span>
+    </h1>
+  </div>
+  <!--Form for trivia API-->
+  <main class="flex-container">
+    <form id="trivia" class="trivia flex-container ">
+      <div class="form-item flex-container">
+        <label for="amount" class="">How many questions?</label>
+        <input type="number" min="1" id="amount" placeholder="Number of questions">
+      </div>
+      <div class="form-item flex-container">
+        <label for="select">About what subject?</label>
+        <Select id="category">
+          <option value="0">Any Category</option>
+          <option value="9">General Knowledge</option>
+          <option value="10">Books</option>
+          <option value="11">Films</option>
+          <option value="12">Music</option>
+          <option value="13">Musicals & Theatres</option>
+          <option value="14">Television</option>
+          <option value="15">Videogames</option>
+          <option value="16">Board Games</option>
+          <option value="17">Sciences & Nature</option>
+          <option value="18">Computers</option>
+          <option value="19">Mathematics</option>
+          <option value="20">Mythology</option>
+          <option value="21">Sports</option>
+          <option value="22">Geography</option>
+          <option value="23">History</option>
+          <option value="24">Politics</option>
+          <option value="25">Art</option>
+          <option value="26">Celebrities</option>
+          <option value="27">Animals</option>
+          <option value="28">Vehicles</option>
+          <option value="29">Comics</option>
+          <option value="30">Gadgets</option>
+          <option value="31">Anime & manga</option>
+          <option value="32">Cartoons</option>
+        </Select>
+      </div>
+      <div class="form-item flex-container">
+        <label for="select-diffculty">Select Diffculty:</label>
+        <div class="options flex-container">
+          <label for="0">
+            <input type="radio" checked name="select-difficulty" value="0" id="diffculty-0">
+            Any Difficult
+          </label>
+          <label for="easy">
+            <input type="radio" name="select-difficulty" value="easy" id="diffculty-easy">
+            Easy
+          </label>
+          <label for="medium">
+            <input type="radio" name="select-difficulty" value="medium" id="diffculty-medium">
+            Medium
+          </label>
+          <label for="hard">
+            <input type="radio" name="select-difficulty" value="hard" id="diffculty-hard">
+            Hard
+          </label>
+        </div>
+      </div>
+      <div class="form-item flex-container">
+        <label for="select-type">Select Type:</label>
+        <div class="options flex-container">
+          <label for="0">
+            <input type="radio" checked name="select-type" value="0" id="type-0">
+            Any Type
+          </label>
+          <label for="multiple">
+            <input type="radio" name="select-type" value="multiple" id="type-multiple">
+            Multiple Choice
+          </label>
+          <label for="boolean">
+            <input type="radio" name="select-type" value="boolean" id="type-boolean">
+            True & False
+          </label>
+        </div>
+      </div>
+      <input type="submit" value="Start" class="star-button"/>
+    </form>
+  </main>
+<script src="/js/trivia.js"></script>
+</body>
+</html>
