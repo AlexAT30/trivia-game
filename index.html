@@ -20,12 +20,14 @@
     </h1>
   </div>
   <!--Form for trivia API-->
-  <main class="flex-container">
-    <form id="trivia" class="trivia flex-container ">
+  <main>
+    <form id="trivia" class="trivia-desing flex-container">
+      <!--Number of questions-->
       <div class="form-item flex-container">
         <label for="amount" class="">How many questions?</label>
-        <input type="number" min="1" id="amount" placeholder="Number of questions">
+        <input type="number" id="amount" placeholder="Number of questions">
       </div>
+      <!--Questions category-->
       <div class="form-item flex-container">
         <label for="select">About what subject?</label>
         <Select id="category">
@@ -55,6 +57,7 @@
           <option value="31">Anime & manga</option>
           <option value="32">Cartoons</option>
         </Select>
+      <!--Questions difficulty-->
       </div>
       <div class="form-item flex-container">
         <label for="select-diffculty">Select Diffculty:</label>
@@ -76,6 +79,7 @@
             Hard
           </label>
         </div>
+      <!--Type of questions-->
       </div>
       <div class="form-item flex-container">
         <label for="select-type">Select Type:</label>
@@ -97,6 +101,29 @@
       <input type="submit" value="Start" class="star-button"/>
     </form>
   </main>
+
+  <!--questions' part-->
+  <div id="questions" class="trivia-desing hide-objects">
+    <div class="questions-information flex-container">
+      <h4 id="category-inf-game" class="questions-information-item">
+        Category: 
+      </h4>
+      <h4 id="difficulty-inf-game" class="questions-information-item">
+        Diffculty: 
+      </h4>
+    </div>
+    <div class="questions-question">
+      <h3 id="question-game">
+        Question...
+      </h3>
+    </div>
+    <div id="question-answers" class="questions-answers">
+      <button id="answer-1" class="questions-answers-item">Answer</button>
+      <button id="answer-2" class="questions-answers-item">Answer</button>
+      <button id="answer-3" class="questions-answers-item">Answer</button>
+      <button id="answer-4" class="questions-answers-item">Answer</button>
+    </div>
+  </div>
 <script src="/js/trivia.js"></script>
 </body>
 </html>
