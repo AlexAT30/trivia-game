@@ -32,20 +32,34 @@ let currentQuestion = 0
 // Funciones //
 
 // Obtiene datos de la API y empieza el juego
-const getApiData = async event => {
+const getApiData = event => {
   event.preventDefault ();
   const triviaDifficulty = difficulty (difficulty0, difficultyEasy, difficultyMedium, difficultyHard);
   const triviaType = type (type0, typeMultiple, typeBoolean);
 
-  // Obtiene el arreglo desde la API
-  const url = `https://opentdb.com/api.php?amount=${amount.value}&category=${category.value}&difficulty=${triviaDifficulty}&type=${triviaType}`;
-  const data = await fetchTriviaData (url);
-  const questionsData = data.results;
   // Oculta el formulario y aparece el menú de preguntas
   trivia.classList.add ("hide-objects");
   questions.classList.remove ("hide-objects");
 
-  startGame (questionsData, currentQuestion);
+  // // Obtiene el arreglo desde la API
+  // const url = `https://opentdb.com/api.php?amount=${amount.value}&category=${category.value}&difficulty=${triviaDifficulty}&type=${triviaType}`;
+  // const data = await fetchTriviaData (url);
+  // const questionsData = data.results;
+  // startGame (questionsData);
+
+  const url = `https://opentdb.com/api.php?amount=${amount.value}&category=${category.value}&difficulty=${triviaDifficulty}&type=${triviaType}`;
+  fetch (url)
+    .then (response => response.json())
+    .then (data => {
+      questionsData = data.results
+      startGame ();
+    });
+
+
+
+
+
+
 
   // Forma de los objetos //
 
@@ -65,31 +79,91 @@ const getApiData = async event => {
 
 }
 
-const startGame = (questionsData, index) => {
-  const correctAnswerIndex = addQuestions (questionsData, index);
-  userResponse (questionsData, allAnswers, correctAnswerIndex);
-}
-// Recorre los 4 botones para verificar una respuesta del usuario
-const userResponse = (questionsData, allAnswers, Index) => {
+const startGame = () => {
+  // Agrega las preguntas e informacion a la pagina
+  categoryInfGame.innerHTML = `category: ${questionsData[currentQuestion].category}`;
+  difficultyInfGame.innerHTML = `difficulty: ${questionsData[currentQuestion].difficulty}`;
+  questionGame.innerHTML = questionsData[currentQuestion].question;
+  let correctAnswer = 0;
+  if (questionsData[currentQuestion].type === "multiple") { // Opcion multiple
+    // Agregamos los dos botones, en caso de que una opcion pasada haya sido boolean
+    answer3.classList.remove ("hide-objects");
+    answer4.classList.remove ("hide-objects");
+
+    // Crear un numero aleatorio entre 1 y 4 para meter la respuesta correcta entre uno de las 4 opciones
+    correctAnswer = Math.floor (Math.random () * 4 + 1); 
+    switch (correctAnswer) {
+      case 1:
+        answer1.innerHTML = questionsData[currentQuestion].correct_answer;
+        answer2.innerHTML = questionsData[currentQuestion].incorrect_answers[0];
+        answer3.innerHTML = questionsData[currentQuestion].incorrect_answers[1];
+        answer4.innerHTML = questionsData[currentQuestion].incorrect_answers[2];
+        break;
+      case 2:
+        answer1.innerHTML = questionsData[currentQuestion].incorrect_answers[0];
+        answer2.innerHTML = questionsData[currentQuestion].correct_answer;
+        answer3.innerHTML = questionsData[currentQuestion].incorrect_answers[1];
+        answer4.innerHTML = questionsData[currentQuestion].incorrect_answers[2];
+        break;
+      case 3:
+        answer1.innerHTML = questionsData[currentQuestion].incorrect_answers[0];
+        answer2.innerHTML = questionsData[currentQuestion].incorrect_answers[1];
+        answer3.innerHTML = questionsData[currentQuestion].correct_answer;
+        answer4.innerHTML = questionsData[currentQuestion].incorrect_answers[2];
+        break;
+      case 4:
+        answer1.innerHTML = questionsData[currentQuestion].incorrect_answers[0];
+        answer2.innerHTML = questionsData[currentQuestion].incorrect_answers[1];
+        answer3.innerHTML = questionsData[currentQuestion].incorrect_answers[2];
+        answer4.innerHTML = questionsData[currentQuestion].correct_answer;
+        break;
+    }
+  }
+  if (questionsData[currentQuestion].type === "boolean") { // Verdadero o falso
+    // Nos deshacemos de 2 opciones que no seran necesarias
+    answer3.classList.add ("hide-objects");
+    answer4.classList.add ("hide-objects");
+    // Generamos un numero entre 1 y 2 de forma aleatoria
+    correctAnswer = Math.floor (Math.random () * 2 + 1); 
+    switch (correctAnswer) {
+      case 1:
+        answer1.innerHTML = questionsData[currentQuestion].correct_answer;
+        answer2.innerHTML = questionsData[currentQuestion].incorrect_answers[0];
+        break;
+      case 2:
+        answer1.innerHTML = questionsData[currentQuestion].incorrect_answers[0];
+        answer2.innerHTML = questionsData[currentQuestion].correct_answer;
+        break;  
+      }
+  }
   for (let i = 0; i < allAnswers.length; i++ ) {
     let currentAnswer = i + 1;
-    allAnswers[i].addEventListener ("click", () => verifyAnswer (questionsData, currentAnswer, Index));
+    allAnswers[i].addEventListener ("click", () => verifyAnswer (currentAnswer, correctAnswer));
+  }
+
+
+
+  // const correctAnswerIndex = addQuestions ();
+  // userResponse (questionsData, allAnswers, correctAnswerIndex);
+}
+// Recorre los 4 botones para verificar una respuesta del usuario
+const userResponse = () => {
+  for (let i = 0; i < allAnswers.length; i++ ) {
+    let currentAnswer = i + 1;
+    allAnswers[i].addEventListener ("click", () => verifyAnswer (currentAnswer, correctAnswer));
   }
 }
 // verifica si la respuesta del usuario es correcta o incorrecta
-const verifyAnswer = (questionsData, currentAnswer, correctAnswerIndex) => {
-  if (currentAnswer == correctAnswerIndex) {
+const verifyAnswer = (currentAnswer, correctAnswer) => {
+  if (currentAnswer == correctAnswer) {
     console.log ("respuesta correcta");
-    currentQuestion += 1;
-    console.log(currentQuestion);
-    startGame (questionsData, currentQuestion);
   }
   else {
     console.log("respuesta incorrecta");
-    currentQuestion += 1;
-    console.log(currentQuestion);
-    startGame (questionsData, currentQuestion);
   }
+  currentQuestion += 1;
+  console.log(currentQuestion);///////////////////////////////////
+  startGame();
 }
   // Funciones para saber que dificultad y que tipo se seleccionó:
 const difficulty = (difficulty0, difficultyEasy, difficultyMedium, difficultyHard) => {
@@ -114,12 +188,11 @@ const addQuestions = (questionsData, index) => {
   categoryInfGame.innerHTML = `category: ${questionsData[index].category}`;
   difficultyInfGame.innerHTML = `difficulty: ${questionsData[index].difficulty}`;
   questionGame.innerHTML = questionsData[index].question;
+  let correctAnswer = 0;
   if (questionsData[index].type === "multiple") { // Opcion multiple
     // Agregamos los dos botones, en caso de que una opcion pasada haya sido boolean
     answer3.classList.remove ("hide-objects");
     answer4.classList.remove ("hide-objects");
-
-    let correctAnswer = 0;
 
     // Crear un numero aleatorio entre 1 y 4 para meter la respuesta correcta entre uno de las 4 opciones
     correctAnswer = Math.floor (Math.random () * 4 + 1); 
