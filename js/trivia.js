@@ -40,6 +40,10 @@ const difficultyHard = document.getElementById ("diffculty-hard");
 const type0 = document.getElementById ("type-0");
 const typeMultiple = document.getElementById ("type-multiple");
 const typeBoolean = document.getElementById ("type-boolean");
+// Score
+const scoreSection = document.getElementById ("score-section");
+const scoreInf = document.getElementById ("score");
+const playAgain = document.getElementById ("play-again")
 
 // variables //
 
@@ -62,6 +66,25 @@ const type = () => {
   if (typeMultiple.checked === true) { return typeMultiple.value;}
   if (typeBoolean.checked === true) { return typeBoolean.value;}
 }
+// Obtener los datos de la API
+const getApiData = event => {
+  event.preventDefault ();
+  // Tipo y dificultad
+  const triviaDifficulty = difficulty ();
+  const triviaType = type ();
+  // Obtiene el arreglo desde la API
+  const url = `https://opentdb.com/api.php?amount=${amount.value}&category=${category.value}&difficulty=${triviaDifficulty}&type=${triviaType}`;
+  fetch (url)
+    .then (response => response.json())
+    .then (data => {
+      questionsData = data.results
+      // Oculta el formulario y aparece el menu de preguntas
+      trivia.classList.add ("hide-objects");
+      questions.classList.remove ("hide-objects");
+      startGame (); // <- Empieza el juego
+    });
+}
+
 // Juego
 const startGame = () => {
   // Agrega las preguntas e informacion a la pagina
@@ -103,41 +126,34 @@ const startGame = () => {
       correctAnswer = 2;
     }
   }
-  // Escucha el boton que presione el usuario
-  for (let i = 0; i < allAnswers.length; i++ ) {
-    let currentAnswer = i + 1;
-    allAnswers[i].addEventListener ("click", () => verifyAnswer (allAnswers[i].id));
-  }
 }
 // Verificar la respuesta del usuario
 const verifyAnswer = (userAnswer) => {
   if (userAnswer == correctAnswer) {
-    console.log ("respuesta correcta");
-  }
-  else {
-    console.log("respuesta incorrecta");
+    score++;
   }
   currentQuestion++;
-  console.log(currentQuestion);///////////////////////////////////
-  startGame();
+  if (currentQuestion != amount.value) {
+    startGame();
+  }
+  else {
+    scoreInf.innerHTML = `(${score}/${amount.value})`;
+    questions.classList.add ("hide-objects");
+    scoreSection.classList.remove ("hide-objects");
+  }
 } 
+const playAgainFunction = () => {
+  score = 0;
+  currentQuestion = 0;
+  scoreSection.classList.add ("hide-objects");
+  trivia.classList.remove ("hide-objects");
+}
 
-// Listener //
+// Listeners //
 
-trivia.addEventListener ("submit", event => {
-  event.preventDefault ();
-  // Tipo y dificultad
-  const triviaDifficulty = difficulty ();
-  const triviaType = type ();
-  // Oculta el formulario y aparece el menu de preguntas
-  trivia.classList.add ("hide-objects");
-  questions.classList.remove ("hide-objects");
-  // Obtiene el arreglo desde la API
-  const url = `https://opentdb.com/api.php?amount=${amount.value}&category=${category.value}&difficulty=${triviaDifficulty}&type=${triviaType}`;
-  fetch (url)
-    .then (response => response.json())
-    .then (data => {
-      questionsData = data.results
-      startGame (); // <- Empieza el juego
-    });
-});
+trivia.addEventListener ("submit", getApiData);
+answer1.addEventListener ("click", () => verifyAnswer (answer1.id));
+answer2.addEventListener ("click", () => verifyAnswer (answer2.id));
+answer3.addEventListener ("click", () => verifyAnswer (answer3.id));
+answer4.addEventListener ("click", () => verifyAnswer (answer4.id));
+playAgain.addEventListener ("click", playAgainFunction);

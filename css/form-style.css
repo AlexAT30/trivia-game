@@ -104,3 +104,30 @@ body {
   color: white;
   cursor: pointer;
 }
+/*Resultado*/
+.score-phrase {
+  font-family: 'Press Start 2P', cursive;
+  justify-content: center;
+  text-align: center;
+}
+.score {
+  justify-content: center;
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+  font-size: 4rem;
+}
+.score h2 {
+  margin: 1rem;
+}
+.play-again {
+  justify-content: center;
+}
+.play-again button {
+  background-color: black;
+  color: white;
+  border-radius: 2rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+}
