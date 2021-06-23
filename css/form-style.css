@@ -22,7 +22,7 @@ body {
     background-color: #eeaee5;
   }
 }
-.trivia-desing {
+.trivia-design {
   box-sizing: border-box;
   margin: auto;
   background-color: white;
@@ -31,6 +31,12 @@ body {
   max-width: 1200px;
   padding: 2rem 4rem;
   border-radius: 2rem;
+}
+@media (max-width: 540px){
+  .trivia-design {
+    width: 90%;
+    padding: 1rem 2rem;
+  }
 }
 .title {
   font-family: 'Press Start 2P', cursive;
@@ -42,6 +48,11 @@ body {
 }
 .title span {
   font-size: 0.5em;
+}
+@media (max-width: 768px){
+  .title {
+    font-size: 0.7rem;
+  }
 }
 
 /* Trivia Form */
@@ -66,10 +77,12 @@ body {
   font-size: 1.5rem;
   cursor: pointer;
 }
-
 /* Empezar el juego */
 .hide-objects {
   display: none;
+}
+.questions {
+  flex-direction: column;
 }
 .questions-information {
   flex-wrap: wrap;
@@ -83,9 +96,6 @@ body {
   margin: 0 1rem;
   margin-bottom: 1rem;
   font-size: 0.75rem;
-}
-.questions {
-  flex-direction: column;
 }
 .questions-question h3 {
   font-size: 2rem;
@@ -104,6 +114,20 @@ body {
   color: white;
   cursor: pointer;
 }
+@media (max-width: 540px){
+  .questions-information-item {
+    font-size: 0.5rem;
+  }
+  .questions-question h3 {
+    font-size: 1.5rem;
+  }
+  .questions-answers {
+    grid-template-columns: 1fr;
+  }
+  .questions-answers-item {
+    padding: 1.5rem;
+  }
+}
 /*Resultado*/
 .score-phrase {
   font-family: 'Press Start 2P', cursive;
@@ -114,7 +138,7 @@ body {
   justify-content: center;
   font-family: 'Press Start 2P', cursive;
   text-align: center;
-  font-size: 4rem;
+  font-size: 3.5rem;
 }
 .score h2 {
   margin: 1rem;
@@ -123,11 +147,21 @@ body {
   justify-content: center;
 }
 .play-again button {
+  font-family: 'Press Start 2P', cursive;
   background-color: black;
   color: white;
   border-radius: 2rem;
   padding: 1rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
+}
+@media (max-width: 540px){
+  .score {
+    font-size: 1.5rem;
+  }
+  .play-again button {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+  }
 }
